@@ -1,0 +1,18 @@
+{
+  "name": "line-bot-vercel",
+  "version": "1.0.0",
+  "description": "LINE Bot for shopping list notifications",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^7.5.2",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
