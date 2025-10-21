@@ -182,5 +182,3 @@ function handleEvent(event) {
   ].join('\n');
   return client.replyMessage(replyToken, { type: 'text', text: help });
 }
-
-
