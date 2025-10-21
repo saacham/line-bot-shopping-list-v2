@@ -19,8 +19,10 @@ try {
     scopes: ['https://www.googleapis.com/auth/spreadsheets'],
   });
   sheets = google.sheets({ version: 'v4', auth });
+  console.log('Google Sheets API initialized successfully');
 } catch (err) {
   console.error('Google Sheets auth error:', err);
+  sheets = null;
 }
 
 const SPREADSHEET_ID = process.env.GOOGLE_SHEETS_SPREADSHEET_ID;
@@ -76,6 +78,9 @@ function handleEvent(event) {
     if (!item) {
       return client.replyMessage(replyToken, { type: 'text', text: '追加する品名を入力してください。例: 追加 牛乳' });
     }
+    if (!sheets) {
+      return client.replyMessage(replyToken, { type: 'text', text: 'Google Sheets API の初期化に失敗しました。管理者にお問い合わせください。' });
+    }
     try {
       // Google Sheetsに追加
       await sheets.spreadsheets.values.append({
@@ -102,6 +107,9 @@ function handleEvent(event) {
 
   if (delMatch) {
     const item = delMatch[1].trim();
+    if (!sheets) {
+      return client.replyMessage(replyToken, { type: 'text', text: 'Google Sheets API の初期化に失敗しました。管理者にお問い合わせください。' });
+    }
     try {
       // 現在のリストを取得
       const result = await sheets.spreadsheets.values.get({
@@ -146,6 +154,9 @@ function handleEvent(event) {
   }
 
   if (isList) {
+    if (!sheets) {
+      return client.replyMessage(replyToken, { type: 'text', text: 'Google Sheets API の初期化に失敗しました。管理者にお問い合わせください。' });
+    }
     try {
       // Google Sheetsから現在のリストを取得
       const result = await sheets.spreadsheets.values.get({
